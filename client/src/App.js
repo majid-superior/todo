@@ -15,7 +15,7 @@ function App() {
   // Function to fetch todos
   const fetchTodos = async () => {
     try {
-      const response = await fetch("${API_URL}/api/todos");
+      const response = await fetch(`${API_URL}/api/todos`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -53,7 +53,7 @@ function App() {
     }
 
     try {
-      const response = await fetch("${API_URL}/api/todos", {
+      const response = await fetch(`${API_URL}/api/todos`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
