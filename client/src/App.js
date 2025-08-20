@@ -12,8 +12,24 @@ function App() {
   // Use the environment variable for the API URL
   const API_URL = process.env.REACT_APP_API_URL;
 
-  // Function to fetch todos
-  const fetchTodos = async () => {
+  // // Function to fetch todos
+  // const fetchTodos = async () => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/api/todos`);
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! status: ${response.status}`);
+  //     }
+  //     const data = await response.json();
+  //     setTodos(data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // Function to fetch todos wrapped in useCallback
+  const fetchTodos = useCallback(async () => {
     try {
       const response = await fetch(`${API_URL}/api/todos`);
       if (!response.ok) {
@@ -26,11 +42,15 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_URL]);
+
+  // useEffect(() => {
+  //   fetchTodos();
+  // }, []);
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [fetchTodos]);
 
   // Check for duplicate tasks
   const isDuplicate = (title) => {
