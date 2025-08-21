@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= serverInfo.server %></title>
+    <link rel="stylesheet" href="/css/welcome.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>
+          <%= serverInfo.server %>
+          <span class="status"><%= serverInfo.status %></span>
+        </h1>
+        <p>Welcome to the Todo API Server</p>
+      </header>
+
+      <section>
+        <h2>Server Information</h2>
+        <div class="server-info">
+          <div class="info-card">
+            <h3>Port</h3>
+            <p><%= serverInfo.port %></p>
+          </div>
+          <div class="info-card">
+            <h3>Environment</h3>
+            <p><%= serverInfo.environment %></p>
+          </div>
+          <div class="info-card">
+            <h3>Timestamp</h3>
+            <p><%= serverInfo.timestamp %></p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>API Routes</h2>
+        <table class="routes-table">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Path</th>
+              <th>Description</th>
+              <th>Authentication</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% apiRoutes.forEach(function(route) { %>
+            <tr>
+              <td>
+                <span class="method <%= route.method.toLowerCase() %>"
+                  ><%= route.method %></span
+                >
+              </td>
+              <td><code><%= route.path %></code></td>
+              <td><%= route.description %></td>
+              <td
+                class="<%= route.auth && route.auth.includes('required') ? 'auth-required' : 'auth-not-required' %>"
+              >
+                <%= route.auth || 'Not specified' %>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </section>
+
+      <div class="footer">
+        <p>
+          Server is running successfully. Use the API endpoints to interact with
+          the application.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

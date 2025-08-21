@@ -1,5 +1,9 @@
+// File: routes/todoRoutes.js
 const express = require("express");
 const router = express.Router();
+
+const authMiddleware = require("../middleware/authMiddleware");
+
 const {
   getTodos,
   createTodo,
@@ -7,16 +11,35 @@ const {
   deleteTodo,
 } = require("../controllers/todoController");
 
-// The GET route to fetch all todos
+// Apply authentication middleware to all todo routes
+router.use(authMiddleware);
+
+/**
+ * @route   GET /api/todos
+ * @desc    Get all todos for authenticated user
+ * @access  Private
+ */
 router.get("/todos", getTodos);
 
-// The POST route to create a new todo
+/**
+ * @route   POST /api/todos
+ * @desc    Create a new todo
+ * @access  Private
+ */
 router.post("/todos", createTodo);
 
-// The PUT route to update a todo by its ID
+/**
+ * @route   PUT /api/todos/:id
+ * @desc    Update a todo
+ * @access  Private
+ */
 router.put("/todos/:id", updateTodo);
 
-// The DELETE route to delete a todo by its ID
+/**
+ * @route   DELETE /api/todos/:id
+ * @desc    Delete a todo
+ * @access  Private
+ */
 router.delete("/todos/:id", deleteTodo);
 
 module.exports = router;
