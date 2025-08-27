@@ -55,11 +55,27 @@ h1 {
   padding: 15px;
   border-radius: 6px;
   border-left: 4px solid #3498db;
+  margin: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .info-card h3 {
   color: #3498db;
   margin-bottom: 10px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-card p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+.info-card p::first-letter {
+  text-transform: uppercase;
 }
 
 .routes-table {
