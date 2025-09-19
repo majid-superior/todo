@@ -1,126 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { useTodos } from "../contexts/TodoContext";
-import TodoForm from "./TodoForm";
-import TodoItem from "./TodoItem";
-import { TodoFilters } from "../types";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { LoginCredentials } from "../types";
 
-const TodoList: React.FC = () => {
-  const { todos, loading, error, getTodos, pagination } = useTodos();
-  const [filters, setFilters] = useState<TodoFilters>({
-    completed: "",
-    priority: "",
-    sortBy: "createdAt",
-    sortOrder: "desc",
+const Register: React.FC = () => {
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    username: "",
+    password: "",
   });
 
-  useEffect(() => {
-    getTodos(filters);
-  }, [filters]);
+  const { register, error, setError } = useAuth();
+  const navigate = useNavigate();
 
-  const handleFilterChange = (key: keyof TodoFilters, value: string): void => {
-    setFilters((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
+    setError("");
   };
 
-  if (loading) {
-    return (
-      <div className="todo-page">
-        <div className="container">
-          <div className="loading">
-            <div className="spinner"></div>
-            <p>Loading your todos...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault();
+    const result = await register(credentials);
+    if (result.success) {
+      navigate("/login");
+    }
+  };
 
   return (
-    <div className="todo-page">
-      <div className="container">
-        <div className="todo-container fade-in">
-          <div className="todo-header">
-            <h1>My Todos</h1>
-            <button
-              className="add-todo-btn"
-              onClick={() => {
-                /* Add logic to show form */
-              }}
-            >
-              ＋ Add New Todo
-            </button>
-          </div>
-
-          {error && <div className="error-message">{error}</div>}
-
-          {/* Filters */}
-          <div className="todo-filters">
-            <select
-              value={filters.completed}
-              onChange={(e) => handleFilterChange("completed", e.target.value)}
-            >
-              <option value="">All Status</option>
-              <option value="true">Completed</option>
-              <option value="false">Pending</option>
-            </select>
-
-            <select
-              value={filters.priority}
-              onChange={(e) => handleFilterChange("priority", e.target.value)}
-            >
-              <option value="">All Priorities</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
-
-            <select
-              value={filters.sortBy}
-              onChange={(e) => handleFilterChange("sortBy", e.target.value)}
-            >
-              <option value="createdAt">Created Date</option>
-              <option value="dueDate">Due Date</option>
-              <option value="priority">Priority</option>
-              <option value="title">Title</option>
-            </select>
-
-            <select
-              value={filters.sortOrder}
-              onChange={(e) => handleFilterChange("sortOrder", e.target.value)}
-            >
-              <option value="desc">Newest First</option>
-              <option value="asc">Oldest First</option>
-            </select>
-          </div>
-
-          {/* Todo Form (you'll need to implement the toggle logic) */}
-          {/* <TodoForm /> */}
-
-          {/* Todo List */}
-          <div className="todo-list">
-            {todos.length === 0 ? (
-              <div className="empty-state">
-                {Object.values(filters).some((filter) => filter !== "")
-                  ? "No todos match your current filters"
-                  : "No todos yet. Create your first todo to get started!"}
-              </div>
-            ) : (
-              todos.map((todo) => <TodoItem key={todo._id} todo={todo} />)
-            )}
-          </div>
-
-          {/* Pagination */}
-          {pagination && pagination.pages > 1 && (
-            <div className="pagination">
-              {/* Add pagination controls here */}
+    <div>
+      <div className="flex justify-center items-center h-[80vh]">
+        <div className="flex flex-col justify-center px-4 gap-4 rounded-xl bg-white shadow-lg lg:w-1/3">
+          <h2 className="text-4xl font-bold text-center lg:text-center">
+            Register
+          </h2>
+          {error && <div className="text-red-500 capitalize py-2">{error}</div>}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div>
+              <label htmlFor="username" className="text-2xl capitalize">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={credentials.username}
+                onChange={handleChange}
+                placeholder="Enter your username"
+                required
+                className="td_input"
+              />
             </div>
-          )}
+            <div>
+              <label htmlFor="password" className="text-2xl capitalize">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={credentials.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+                className="td_input"
+              />
+            </div>
+
+            <button type="submit" className="td-button-blue">
+              Sign Up
+            </button>
+          </form>
+          <p>
+            Have an account?{" "}
+            <Link
+              to="/login"
+              className="font-bold text-blue-500 hover:underline"
+            >
+              Sign In
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default TodoList;
+export default Register;
