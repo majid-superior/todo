@@ -28,51 +28,57 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="auth-page">
-      <div className="container">
-        <div className="auth-container">
-          <div className="auth-card fade-in">
-            <h2>Welcome Back</h2>
-
-            {error && <div className="error-message">{error}</div>}
-
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  value={credentials.username}
-                  onChange={handleChange}
-                  placeholder="Enter your username"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={credentials.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  required
-                />
-              </div>
-
-              <button type="submit" className="auth-button">
-                Sign In
-              </button>
-            </form>
-
-            <p className="auth-link">
-              Don't have an account? <Link to="/register">Create one here</Link>
-            </p>
+    <div className="flex justify-center items-center h-[80vh]">
+      <div className="flex flex-col justify-center px-4 gap-4 rounded-xl bg-white shadow-lg lg:w-1/3">
+        <h2 className="text-4xl font-bold text-center lg:text-center">
+          Welcome
+        </h2>
+        {error && <div className="text-red-500 capitalize py-2">{error}</div>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div>
+            <label htmlFor="username" className="text-2xl capitalize">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={credentials.username}
+              onChange={handleChange}
+              placeholder="Enter your username"
+              required
+              className="td_input"
+            />
           </div>
-        </div>
+          <div>
+            <label htmlFor="password" className="text-2xl capitalize">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              required
+              className="td_input"
+            />
+          </div>
+
+          <button type="submit" className="td-button-blue">
+            Sign In
+          </button>
+        </form>
+        <p>
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="font-bold text-blue-500 hover:underline"
+          >
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -15,6 +15,8 @@ export interface Todo {
   userId: string;
 }
 
+export type Priority = "low" | "medium" | "high";
+
 export interface AuthResponse {
   success: boolean;
   message: string;

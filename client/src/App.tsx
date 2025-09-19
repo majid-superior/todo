@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { TodoProvider } from "./contexts/TodoContext";
@@ -11,18 +12,29 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import TodoList from "./components/TodoList";
-import "./App.css";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+  const { pathname } = location;
+
+  // console.log("🔐 ProtectedRoute triggered");
+  // console.log("📁 Current path:", pathname);
+  // console.log("🔑 isAuthenticated:", isAuthenticated);
+  // console.log("⏳ Loading state:", loading);
+
+  // Don't check authentication for login and register routes
+  if (pathname === "/login" || pathname === "/register") {
+    return <>{children}</>;
+  }
 
   if (loading) {
     return (
-      <div className="container">
-        <div className="loading">
-          <div className="spinner"></div>
+      <div className="">
+        <div className="">
+          <div className=""></div>
           <p>Loading...</p>
         </div>
       </div>
@@ -37,10 +49,10 @@ const App: React.FC = () => {
     <AuthProvider>
       <TodoProvider>
         <Router>
-          <div className="app">
+          <div className="">
             <Navbar />
-            <main className="main-content">
-              <div className="container">
+            <main className="">
+              <div className="">
                 <Routes>
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
