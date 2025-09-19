@@ -19,7 +19,9 @@ const Navbar: React.FC = () => {
       <div className="w-1/2 flex justify-end items-center pr-4 gap-2">
         {isAuthenticated ? (
           <>
-            {/* <span className="capitalize">Welcome, {user?.username} |</span> */}
+            <span className="capitalize hidden">
+              Welcome, {user?.username} |
+            </span>
             <button onClick={handleLogout} className="cursor-pointer">
               Logout
             </button>
