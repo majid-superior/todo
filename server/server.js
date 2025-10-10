@@ -49,7 +49,7 @@ app.use(
 // CORS configuration (handles preflight automatically)
 const allowedOrigins = process.env.FRONTEND_ORIGINS
   ? process.env.FRONTEND_ORIGINS.split(",").map((origin) => origin.trim())
-  : ["http://localhost:3000", "http://localhost:5173", "http://localhost:8080"];
+  : ["http://localhost:3000", "http://192.168.100.82:3000"];
 
 app.use(
   cors({
