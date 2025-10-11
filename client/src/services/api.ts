@@ -7,7 +7,9 @@ import {
   UpdateTodoData,
 } from "../types";
 
-const API_BASE_URL = import.meta.env.API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+console.log("API Base URL:", API_BASE_URL);
 
 const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
