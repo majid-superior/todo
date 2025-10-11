@@ -12,7 +12,7 @@ const todoRoutes = require("./routes/todoRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 // Validate required environment variables
 const requiredEnvVars = ["MONGO_URI", "JWT_SECRET"];
@@ -46,10 +46,13 @@ app.use(
   })
 );
 
+// // CORS configuration (handles preflight automatically)
+// const allowedOrigins = process.env.FRONTEND_ORIGINS
+//   ? process.env.FRONTEND_ORIGINS.split(",").map((origin) => origin.trim())
+//   : ["http://localhost:3000", "http://192.168.100.82:3000"];
+
 // CORS configuration (handles preflight automatically)
-const allowedOrigins = process.env.FRONTEND_ORIGINS
-  ? process.env.FRONTEND_ORIGINS.split(",").map((origin) => origin.trim())
-  : ["http://localhost:3000", "http://192.168.100.82:3000"];
+const allowedOrigins = process.env.FRONTEND_ORIGINS;
 
 app.use(
   cors({
