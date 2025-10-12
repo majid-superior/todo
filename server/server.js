@@ -237,11 +237,10 @@ const startServer = async () => {
     await connectDB();
 
     const HOST = process.env.HOST;
-    const PORT = process.env.PORT;
 
     server = app.listen(PORT, HOST, () => {
-      console.log(`🚀 Server running on http://${HOST}:${PORT}
-        📍 Health check: http://${HOST}:${PORT}/`);
+      console.log(`🚀 Server running on http://${HOST}
+        📍 Health check: http://${HOST}/`);
     });
 
     server.on("error", (error) => {
