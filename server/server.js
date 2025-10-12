@@ -237,10 +237,15 @@ const startServer = async () => {
     await connectDB();
 
     const HOST = process.env.HOST;
+    const PORT = process.env.PORT;
 
-    server = app.listen(PORT, HOST, () => {
-      console.log(`🚀 Server running on http://${HOST}
-        📍 Health check: http://${HOST}/`);
+    // Add validation
+    if (!HOST || !PORT) {
+      throw new Error("HOST and PORT environment variables are required");
+    }
+
+    server = app.listen(Number(PORT), HOST, () => {
+      console.log(`🚀 Server running on http://${HOST}:${PORT}`);
     });
 
     server.on("error", (error) => {

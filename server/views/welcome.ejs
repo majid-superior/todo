@@ -13,7 +13,7 @@
           <%= serverInfo.server %>
           <span class="status"><%= serverInfo.status %></span>
         </h1>
-        <p>Welcome to the Todo API Server 2025</p>
+        <p>Welcome to the Todo API Server</p>
       </header>
 
       <section>
@@ -29,7 +29,11 @@
           </div>
           <div class="info-card">
             <h3>Timestamp</h3>
-            <p><%= serverInfo.timestamp %></p>
+            <p>
+              <% const date = new Date(serverInfo.timestamp); %> <%=
+              date.toISOString().split('T')[0] %> --- <%=
+              date.toISOString().split('T')[1].split('.')[0] %>
+            </p>
           </div>
         </div>
       </section>
