@@ -49,7 +49,7 @@ app.use(
 // // CORS configuration (handles preflight automatically)
 // const allowedOrigins = process.env.FRONTEND_ORIGINS
 //   ? process.env.FRONTEND_ORIGINS.split(",").map((origin) => origin.trim())
-//   : ["http://localhost:3000", "http://192.168.100.82:3000"];
+//   : ["http://localhost:3000"];
 
 // CORS configuration (handles preflight automatically)
 const allowedOrigins = process.env.FRONTEND_ORIGINS;
@@ -236,11 +236,12 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    server = app.listen(PORT, () => {
-      console.log(`
-🚀 Server running on port ${PORT}
-📍 Health check: http://localhost:${PORT}
-        `);
+    const HOST = process.env.HOST;
+    const PORT = process.env.PORT;
+
+    server = app.listen(PORT, HOST, () => {
+      console.log(`🚀 Server running on http://${HOST}:${PORT}
+        📍 Health check: http://${HOST}:${PORT}/`);
     });
 
     server.on("error", (error) => {
